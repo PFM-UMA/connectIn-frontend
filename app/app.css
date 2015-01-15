@@ -1,0 +1,79 @@
+body {
+    background-color: #B2AFA2
+}
+
+/* app css stylesheet */
+
+.menu {
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
+}
+
+.menu:before {
+    content: "[";
+}
+
+.menu:after {
+    content: "]";
+}
+
+.menu > li {
+    display: inline;
+}
+
+.menu > li:before {
+    content: "|";
+    padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+    content: "";
+    padding: 0;
+}
+
+h2 {
+    margin: 0;
+    color: #666;
+    padding-top: 90px;
+    font-size: 52px;
+    font-family: "trebuchet ms", sans-serif;
+}
+
+.item {
+    background: #333;
+    text-align: center;
+    height: 300px !important;
+}
+
+.carousel {
+    margin-top: 20px;
+}
+
+.bs-example {
+    margin: 20px;
+}
+
+.front-banner {
+    font-family: 'Alfa Slab One', cursive;
+    font-size: 60px;
+    padding: 2em 3em;
+    background-color: #c6c2b4;
+    background-image:
+    repeating-linear-gradient(120deg, rgba(255,255,255,.1), rgba(255,255,255,.1) 1px, transparent 1px, transparent 60px),
+    repeating-linear-gradient(60deg, rgba(255,255,255,.1), rgba(255,255,255,.1) 1px, transparent 1px, transparent 60px),
+    linear-gradient(60deg, rgba(0,0,0,.1) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.1) 75%, rgba(0,0,0,.1)),
+    linear-gradient(120deg, rgba(0,0,0,.1) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.1) 75%, rgba(0,0,0,.1));
+    background-size: 70px 120px;
+}
+
+input {
+    background-color: #e1ded1;
+    color: #201d1a;
+}
+
+.form-control {
+    background-color: #e1ded1;
+    0px solid #ccc
+}
