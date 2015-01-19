@@ -2,82 +2,43 @@
 
 angular.module('connectIn.login', ['ngRoute'])
 
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/login', {
-            templateUrl: 'login/login.html',
-            controller: 'LoginCtrl'
-        });
-    }])
-
-    .controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService) {
+    .controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, USER_ROLES, AuthService) {
         $scope.credentials = {
             username: '',
             password: ''
         };
+
+        $scope.currentUser = null;
+        $scope.userRoles = USER_ROLES;
+        $scope.isAuthorized = AuthService.isAuthorized;
+
+        $scope.setCurrentUser = function (user) {
+            $scope.currentUser = user;
+        };
+
         $scope.login = function (credentials) {
-            AuthService.login(credentials).then(function (user) {
-                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                $scope.setCurrentUser(user);
+            AuthService.login(credentials).then(
+               function (user) {
+                    // LOGIN SUCCEEDED
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    $scope.setCurrentUser(user);
             }, function () {
-                $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+                    // LOGIN FAILED
+                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
             });
         };
     })
 
-    .constant('AUTH_EVENTS', {
-        loginSuccess: 'auth-login-success',
-        loginFailed: 'auth-login-failed',
-        logoutSuccess: 'auth-logout-success',
-        sessionTimeout: 'auth-session-timeout',
-        notAuthenticated: 'auth-not-authenticated',
-        notAuthorized: 'auth-not-authorized'
+    .controller('SignupCtrl', function($scope, $http){
+        $scope.credentials = {
+            username: '',
+            password: ''
+        };
+
+        $scope.signup = function(credentials){
+            $http.post('http://localhost:1337/signup', credentials)
+        }
     })
 
-    .constant('USER_ROLES', {
-        all: '*',
-        admin: 'admin',
-        user: 'user',
-        guest: 'guest'
-    })
 
-    .factory('AuthService', function ($http, Session) {
-        var authService = {};
 
-        authService.login = function (credentials) {
-            return $http
-                .post('/login', credentials)
-                .then(function (res) {
-                    Session.create(res.data.id, res.data.user.id,
-                        res.data.user.role);
-                    return res.data.user;
-                });
-        };
-
-        authService.isAuthenticated = function () {
-            return !!Session.userId;
-        };
-
-        authService.isAuthorized = function (authorizedRoles) {
-            if (!angular.isArray(authorizedRoles)) {
-                authorizedRoles = [authorizedRoles];
-            }
-            return (authService.isAuthenticated() &&
-                authorizedRoles.indexOf(Session.userRole) !== -1);
-        };
-
-        return authService;
-    })
-
-    .service('Session', function () {
-        this.create = function (sessionId, userId, userRole) {
-            this.id = sessionId;
-            this.userId = userId;
-            this.userRole = userRole;
-        };
-        this.destroy = function () {
-            this.id = null;
-            this.userId = null;
-            this.userRole = null;
-        };
-        return this;
-    })

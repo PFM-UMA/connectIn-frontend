@@ -31,7 +31,7 @@
                     <input ng-model="credentials.username" type="text" class="form-control" name="username" placeholder="Usuario">
                 </div>
                 <div class="form-group">
-                    <input ng-model="credentials.password" type="text" class="form-control" name="password" placeholder="Contraseña">
+                    <input ng-model="credentials.password" type="password" class="form-control" name="password" placeholder="Contraseña">
                 </div>
                 <button type="submit" class="btn btn-success">Acceder</button>
                 <br>
@@ -76,24 +76,25 @@
             </p>
         </div>
 
-        <div class="col-md-6">
+        <div ng-controller="SignupCtrl" class="col-md-6">
             <h3 class="dark-grey">Regístrate!</h3>
+            <form ng-submit="signup(credentials)">
+                <div class="form-group col-lg-12">
+                    <label>Dirección de correo</label>
+                    <input type="email" ng-model="credentials.username" class="form-control" required>
+                </div>
 
-            <div class="form-group col-lg-12">
-                <label>Dirección de correo</label>
-                <input type="" name="" class="form-control" id="" value="">
-            </div>
+                <div class="form-group col-lg-6">
+                    <label>Contraseña</label>
+                    <input type="password" ng-model="credentials.password" class="form-control" required>
+                </div>
 
-            <div class="form-group col-lg-6">
-                <label>Contraseña</label>
-                <input type="password" name="" class="form-control" id="" value="">
-            </div>
-
-            <div class="form-group col-lg-6">
-                <label>Repetir contraseña</label>
-                <input type="password" name="" class="form-control" id="" value="">
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
+                <div class="form-group col-lg-6">
+                    <label>Repetir contraseña</label>
+                    <input type="password" ng-model="credentials." class="form-control" value="">
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
         </div>
 
     </div>
